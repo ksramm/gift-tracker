@@ -4,343 +4,265 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎁 Gift Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --bg: #0e0b14;
-  --surface: #16121f;
-  --card: #1c1728;
-  --border: #2a2238;
-  --accent: #c47ed4;
-  --accent2: #e8a87c;
-  --accent3: #7cb8e8;
-  --accent4: #7ce8a8;
-  --accent5: #e87c8a;
-  --text: #f0eaf8;
-  --muted: #7a6d8a;
-  --soft: #3a2f4a;
-}
-
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'Raleway', sans-serif;
+  background: linear-gradient(135deg, #fdf6f0 0%, #f8f0fb 50%, #f0f6fd 100%);
   min-height: 100vh;
-  overflow-x: hidden;
+  padding-bottom: 60px;
 }
 
-/* Background orbs */
-body::before {
-  content: '';
-  position: fixed;
-  top: -200px; left: -200px;
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, #c47ed420 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-body::after {
-  content: '';
-  position: fixed;
-  bottom: -200px; right: -200px;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, #7cb8e820 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, select { font-family: inherit; }
 
-/* Header */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #e0d0f0; border-radius: 3px; }
+
+/* HEADER */
 .header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(14, 11, 20, 0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  background: #fff;
+  border-bottom: 1.5px solid #f0e8fb;
   padding: 0 32px;
-  height: 68px;
+  height: 70px;
   display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 20px #e0c8f020;
 }
-.logo {
-  display: flex; align-items: center; gap: 12px;
-}
+.logo { display: flex; align-items: center; gap: 12px; }
 .logo-icon {
-  width: 40px; height: 40px; border-radius: 12px;
-  background: linear-gradient(135deg, #c47ed4, #7cb8e8);
+  width: 38px; height: 38px; border-radius: 10px;
+  background: linear-gradient(135deg, #E8A0BF, #957DAD);
   display: flex; align-items: center; justify-content: center;
   font-size: 20px;
-  box-shadow: 0 4px 16px #c47ed440;
 }
-.logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--text); }
-.logo-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.logo-title { font-size: 17px; font-weight: 800; color: #2d1f3d; font-family: 'Playfair Display', serif; }
+.logo-sub { font-size: 11px; color: #b0a0c0; letter-spacing: 0.08em; text-transform: uppercase; }
 
 .btn-add {
-  background: linear-gradient(135deg, #c47ed4, #9b5bb5);
-  color: #fff;
-  border: none; cursor: pointer;
-  border-radius: 10px; padding: 10px 22px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 600;
+  background: linear-gradient(135deg, #957DAD, #c4a0d8);
+  color: #fff; border-radius: 10px; padding: 9px 20px;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.03em;
+  box-shadow: 0 4px 14px #957DAD40;
   display: flex; align-items: center; gap: 6px;
-  box-shadow: 0 4px 20px #c47ed440;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.btn-add:hover { transform: translateY(-1px); box-shadow: 0 6px 24px #c47ed460; }
+.btn-add:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #957DAD60; }
 
-/* Layout */
-.container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; position: relative; z-index: 1; }
+/* CONTAINER */
+.container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 0; }
 
-/* Stat cards */
+/* STAT CARDS */
 .stats-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 16px; margin-bottom: 32px;
 }
 .stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 22px 24px;
-  position: relative; overflow: hidden;
-  transition: transform 0.2s, border-color 0.2s;
-  animation: fadeUp 0.5s ease both;
+  background: #fff;
+  border-radius: 16px; padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 4px;
+  transition: transform 0.2s;
+  animation: fadeUp 0.4s ease both;
 }
 .stat-card:hover { transform: translateY(-2px); }
-.stat-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: var(--c, #c47ed4);
-}
-.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-.stat-value { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 700; color: var(--c, #c47ed4); line-height: 1; }
-.stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.stat-label { font-size: 13px; color: #999; letter-spacing: 0.05em; text-transform: uppercase; }
+.stat-value { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; line-height: 1; }
+.stat-sub { font-size: 12px; color: #bbb; }
 
-/* Tabs */
+/* TABS */
 .tabs {
   display: flex; gap: 4px;
-  background: var(--card); border: 1px solid var(--border);
+  background: #fff; border: 1.5px solid #f0e8fb;
   border-radius: 12px; padding: 4px;
   width: fit-content; margin-bottom: 24px;
 }
 .tab {
-  padding: 8px 20px; border-radius: 9px; border: none; cursor: pointer;
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-  color: var(--muted); background: transparent;
-  transition: all 0.2s;
+  padding: 8px 20px; border-radius: 9px;
+  font-size: 13px; font-weight: 600; color: #9a88b0;
+  background: transparent; transition: all 0.2s; cursor: pointer; border: none;
+  font-family: 'Raleway', sans-serif;
 }
 .tab.active {
-  background: linear-gradient(135deg, #c47ed4, #9b5bb5);
-  color: #fff; box-shadow: 0 2px 12px #c47ed430;
+  background: linear-gradient(135deg, #957DAD, #c4a0d8);
+  color: #fff; box-shadow: 0 2px 10px #957DAD30;
 }
 
-/* Panel */
+/* PANEL */
 .panel { animation: fadeUp 0.3s ease; }
 
-/* Filters */
+/* FILTERS */
 .filters {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 14px; padding: 16px 20px;
-  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-  margin-bottom: 20px;
+  background: #fff; border-radius: 14px; border: 1.5px solid #f0e8fb;
+  padding: 16px 20px; margin-bottom: 20px;
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
 }
-.filter-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; }
-select, input[type="date"], input[type="text"], input[type="number"] {
-  background: var(--surface); border: 1px solid var(--border);
-  color: var(--text); border-radius: 8px; padding: 7px 12px;
-  font-family: 'DM Sans', sans-serif; font-size: 13px;
-  outline: none; transition: border-color 0.2s;
-  -webkit-appearance: none;
+.filter-label { font-size: 12px; color: #b0a0c0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+select, input[type="date"], input[type="number"] {
+  border: 1.5px solid #e8d8f8; border-radius: 8px; padding: 6px 12px;
+  font-size: 13px; color: #4a3060; background: #faf8ff; outline: none;
+  transition: border-color 0.2s;
 }
-select:focus, input:focus { border-color: var(--accent); }
-select option { background: var(--surface); }
-
+select:focus, input:focus { border-color: #957DAD; }
 .btn-reset {
-  background: transparent; border: 1px solid #e87c8a44;
-  color: #e87c8a; border-radius: 8px; padding: 7px 14px;
-  font-size: 12px; font-weight: 600; cursor: pointer;
-  transition: background 0.2s;
+  font-size: 12px; color: #E05252; font-weight: 700;
+  padding: 6px 12px; border: 1.5px solid #fde0e0; border-radius: 8px;
+  background: #fff8f8; cursor: pointer;
 }
-.btn-reset:hover { background: #e87c8a15; }
-
+.btn-reset:hover { background: #fde0e0; }
 .sort-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 
-/* Table */
+/* TABLE */
 .table-wrap {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 14px; overflow: hidden;
+  background: #fff; border-radius: 14px; border: 1.5px solid #f0e8fb; overflow: hidden;
 }
 table { width: 100%; border-collapse: collapse; }
-thead tr { background: var(--surface); border-bottom: 1px solid var(--border); }
+thead tr { background: #faf7ff; border-bottom: 1.5px solid #f0e8fb; }
 th {
   padding: 13px 20px; text-align: left;
-  font-size: 10px; color: var(--muted); font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.1em;
+  font-size: 11px; color: #b0a0c0; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
 }
-tbody tr { border-bottom: 1px solid #1e1a2a; transition: background 0.15s; }
+tbody tr { border-bottom: 1px solid #f5f0fc; transition: background 0.15s; }
 tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: #211c2e; }
+tbody tr:hover { background: #faf8ff; }
 td { padding: 14px 20px; }
 
+.editor-cell { display: flex; align-items: center; gap: 10px; }
 .editor-avatar {
-  width: 34px; height: 34px; border-radius: 10px;
+  width: 32px; height: 32px; border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; font-weight: 700; flex-shrink: 0;
 }
-.editor-cell { display: flex; align-items: center; gap: 10px; }
-.editor-name { font-size: 14px; font-weight: 600; }
-
-.coll-tag {
-  background: #2a2040; color: #b090d0;
-  border-radius: 6px; padding: 4px 10px;
-  font-size: 13px; display: inline-block;
-}
-
-.count-val {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 22px; font-weight: 700;
-}
-
-.date-val { font-size: 13px; color: var(--muted); }
-
+.editor-name { font-size: 14px; font-weight: 600; color: #2d1f3d; }
+.coll-tag { background: #f5f0fc; color: #5a4070; border-radius: 6px; padding: 4px 10px; font-size: 13px; }
+.count-cell { display: flex; align-items: center; gap: 6px; }
+.count-num { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 800; }
+.count-unit { font-size: 12px; color: #c0b0d0; }
+.date-val { font-size: 13px; color: #8070a0; }
 .btn-del {
-  opacity: 0; background: transparent;
-  border: 1px solid #e87c8a44; color: #e87c8a;
-  border-radius: 6px; padding: 4px 10px;
-  font-size: 12px; font-weight: 600; cursor: pointer;
-  transition: all 0.2s;
+  opacity: 0; color: #E05252; font-size: 12px; font-weight: 700;
+  padding: 4px 10px; border: 1.5px solid #fde0e0; border-radius: 6px;
+  background: #fff8f8; transition: opacity 0.2s; cursor: pointer;
 }
 tbody tr:hover .btn-del { opacity: 1; }
-.btn-del:hover { background: #e87c8a15; }
+.table-empty { padding: 48px; text-align: center; color: #c0b0d0; font-size: 14px; }
+.table-footer { padding: 10px 20px; font-size: 12px; color: #c0b0d0; text-align: right; border-top: 1px solid #f5f0fc; }
 
-.table-empty { padding: 48px; text-align: center; color: var(--muted); font-size: 14px; }
-.table-footer { padding: 10px 20px; font-size: 12px; color: var(--muted); text-align: right; border-top: 1px solid var(--border); }
-
-/* Editor cards */
-.editors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+/* EDITOR CARDS */
+.editors-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 .editor-card {
-  background: var(--card); border-radius: 16px;
-  border: 1px solid var(--border); overflow: hidden;
-  transition: transform 0.2s; animation: fadeUp 0.4s ease both;
+  background: #fff; border-radius: 16px; border: 1.5px solid #f0e8fb;
+  overflow: hidden; transition: transform 0.2s; animation: fadeUp 0.4s ease both;
 }
 .editor-card:hover { transform: translateY(-2px); }
 .editor-card-head {
-  padding: 20px 24px;
-  display: flex; align-items: center; gap: 14px;
-  border-bottom: 1px solid var(--border);
+  padding: 20px 24px; display: flex; align-items: center; gap: 14px;
+  border-bottom: 1.5px solid #f5f0fc;
 }
-.editor-card-big-avatar {
-  width: 48px; height: 48px; border-radius: 14px;
+.editor-big-avatar {
+  width: 46px; height: 46px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
   font-size: 20px; font-weight: 800; flex-shrink: 0;
 }
-.editor-card-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; }
-.editor-card-meta { font-size: 12px; color: var(--muted); }
-.editor-card-total {
-  margin-left: auto; text-align: right;
+.editor-card-name { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 16px; color: #2d1f3d; }
+.editor-card-meta { font-size: 12px; color: #a090b0; }
+.editor-card-total { text-align: right; margin-left: auto; }
+.editor-card-total-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 800; line-height: 1; }
+.editor-card-total-label { font-size: 11px; color: #b0a0c0; }
+.editor-card-cols-head {
+  padding: 8px 24px 4px; display: flex; justify-content: space-between;
+  font-size: 11px; color: #b0a0c0; text-transform: uppercase; letter-spacing: 0.07em; font-weight: 700;
 }
-.editor-card-total-num {
-  font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; line-height: 1;
-}
-.editor-card-total-label { font-size: 11px; color: var(--muted); }
-.editor-card-body { padding: 4px 0; }
 .editor-entry {
-  padding: 10px 24px;
-  display: flex; justify-content: space-between; align-items: center;
-  border-top: 1px solid #1e1a2a;
+  padding: 8px 24px; display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid #f5f0fc;
 }
-.editor-entry-coll { font-size: 13px; font-weight: 600; color: var(--text); }
-.editor-entry-date { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.editor-entry-count { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; }
+.editor-entry-coll { font-size: 13px; color: #4a3060; font-weight: 600; }
+.editor-entry-date { font-size: 11px; color: #c0b0d0; }
+.editor-entry-count { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 800; }
+.editor-more { padding: 8px 24px; font-size: 12px; color: #c0b0d0; border-top: 1px solid #f5f0fc; }
+.editor-empty { padding: 16px 24px; font-size: 13px; color: #d0c0e0; text-align: center; }
 .editor-card-bar { padding: 12px 24px 16px; }
-.bar-info { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
-.bar-track { background: var(--soft); border-radius: 4px; height: 6px; overflow: hidden; }
+.bar-info { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
+.bar-track { background: #f0f0f0; border-radius: 4px; height: 6px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
-.editor-empty { padding: 20px 24px; font-size: 13px; color: var(--muted); text-align: center; }
 
-/* Collections */
-.coll-list { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-.coll-item { padding: 22px 28px; border-bottom: 1px solid #1e1a2a; }
+/* COLLECTIONS */
+.coll-list { background: #fff; border-radius: 16px; border: 1.5px solid #f0e8fb; overflow: hidden; }
+.coll-item { padding: 20px 28px; border-bottom: 1px solid #f5f0fc; }
 .coll-item:last-child { border-bottom: none; }
-.coll-item-top { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-.coll-item-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--soft); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.coll-item-name { font-size: 16px; font-weight: 700; }
-.coll-item-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.coll-item-count { margin-left: auto; text-align: right; }
-.coll-item-count-num { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--accent); }
-.coll-item-count-label { font-size: 11px; color: var(--muted); }
-.coll-bar-track { background: var(--soft); border-radius: 6px; height: 8px; overflow: hidden; margin-bottom: 10px; }
-.coll-bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #c47ed4, #7cb8e8); transition: width 0.8s cubic-bezier(.4,0,.2,1); }
-.coll-editors-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.coll-item-top { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
+.coll-icon { width: 36px; height: 36px; border-radius: 10px; background: #f5f0fc; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.coll-name { font-weight: 700; font-size: 15px; color: #2d1f3d; }
+.coll-meta { font-size: 12px; color: #b0a0c0; margin-top: 2px; }
+.coll-count { margin-left: auto; text-align: right; }
+.coll-count-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 800; color: #957DAD; }
+.coll-count-label { font-size: 11px; color: #c0b0d0; }
+.coll-bar-track { background: #f5f0fc; border-radius: 6px; height: 8px; overflow: hidden; margin-bottom: 10px; }
+.coll-bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, #957DAD, #c4a0d8); transition: width 0.8s cubic-bezier(.4,0,.2,1); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { border-radius: 20px; padding: 3px 10px; font-size: 12px; font-weight: 600; }
 
-/* Modal */
+/* MODAL */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 1000;
-  background: rgba(8, 6, 14, 0.8);
-  backdrop-filter: blur(8px);
+  background: #2d1f3d80; backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.3s;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
 .modal {
-  background: var(--card); border: 1px solid var(--border);
-  border-radius: 20px; padding: 36px 40px; width: 440px; max-width: 95vw;
-  box-shadow: 0 24px 80px #00000060;
-  transform: translateY(20px) scale(0.97);
-  transition: transform 0.3s;
+  background: #fff; border-radius: 20px; padding: 32px 36px; width: 420px; max-width: 95vw;
+  box-shadow: 0 20px 60px #957DAD30; border: 1.5px solid #f0e8fb;
+  transform: translateY(16px) scale(0.97); transition: transform 0.3s;
 }
 .modal-overlay.open .modal { transform: translateY(0) scale(1); }
-.modal-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; margin-bottom: 4px; }
-.modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
-.form-group { margin-bottom: 18px; }
-.form-label { display: block; font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 7px; }
-.form-group select, .form-group input { width: 100%; }
+.modal-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 800; color: #2d1f3d; margin-bottom: 4px; }
+.modal-sub { font-size: 13px; color: #b0a0c0; margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 12px; color: #9080a8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.form-group select, .form-group input { width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 14px; }
 .modal-actions { display: flex; gap: 10px; margin-top: 28px; }
 .btn-cancel {
   flex: 1; padding: 12px; border-radius: 10px;
-  border: 1px solid var(--border); background: transparent;
-  color: var(--muted); font-family: 'DM Sans', sans-serif;
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  transition: border-color 0.2s;
+  border: 1.5px solid #e8d8f8; background: #faf8ff;
+  font-size: 14px; font-weight: 600; color: #9080a8;
+  font-family: 'Raleway', sans-serif; cursor: pointer;
 }
-.btn-cancel:hover { border-color: var(--accent); color: var(--text); }
+.btn-cancel:hover { border-color: #957DAD; }
 .btn-confirm {
   flex: 2; padding: 12px; border-radius: 10px; border: none;
-  background: linear-gradient(135deg, #c47ed4, #9b5bb5);
-  color: #fff; font-family: 'DM Sans', sans-serif;
-  font-size: 14px; font-weight: 700; cursor: pointer;
-  box-shadow: 0 4px 16px #c47ed440;
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: linear-gradient(135deg, #957DAD, #c4a0d8);
+  font-size: 14px; font-weight: 700; color: #fff;
+  font-family: 'Raleway', sans-serif; cursor: pointer;
+  box-shadow: 0 4px 14px #957DAD30;
 }
-.btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #c47ed460; }
+.btn-confirm:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #957DAD50; }
 
-/* Toast */
+/* TOAST */
 .toast {
-  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px);
-  background: var(--card); border: 1px solid var(--accent);
-  color: var(--text); border-radius: 10px; padding: 12px 24px;
-  font-size: 14px; font-weight: 600; z-index: 2000;
-  transition: transform 0.3s; box-shadow: 0 8px 30px #00000040;
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #fff; border: 1.5px solid #e8d8f8;
+  border-radius: 10px; padding: 12px 24px;
+  font-size: 14px; font-weight: 600; color: #2d1f3d;
+  box-shadow: 0 8px 30px #957DAD20; z-index: 2000;
+  transition: transform 0.3s;
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-/* Animations */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--soft); border-radius: 3px; }
-
-/* Responsive */
 @media (max-width: 600px) {
   .header { padding: 0 16px; }
-  .container { padding: 20px 12px 60px; }
+  .container { padding: 20px 12px 0; }
   .logo-sub { display: none; }
-  .stat-value { font-size: 30px; }
   th:last-child, td:last-child { display: none; }
 }
 </style>
@@ -351,7 +273,7 @@ tbody tr:hover .btn-del { opacity: 1; }
   <div class="logo">
     <div class="logo-icon">🎁</div>
     <div>
-      <div class="logo-text">Gift Tracker</div>
+      <div class="logo-title">Gift Tracker</div>
       <div class="logo-sub">Система отчётности редакторов</div>
     </div>
   </div>
@@ -362,39 +284,24 @@ tbody tr:hover .btn-del { opacity: 1; }
 
 <div class="container">
   <div class="stats-grid" id="statsGrid"></div>
-
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('log', this)">📋 Журнал</button>
-    <button class="tab" onclick="switchTab('editors', this)">👩‍💼 По редакторам</button>
-    <button class="tab" onclick="switchTab('collections', this)">📦 По подборкам</button>
+    <button class="tab active" onclick="switchTab('log',this)">📋 Журнал</button>
+    <button class="tab" onclick="switchTab('editors',this)">👩‍💼 По редакторам</button>
+    <button class="tab" onclick="switchTab('collections',this)">📦 По подборкам</button>
   </div>
-
   <div id="panel-log" class="panel"></div>
   <div id="panel-editors" class="panel" style="display:none"></div>
   <div id="panel-collections" class="panel" style="display:none"></div>
 </div>
 
-<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal">
     <div class="modal-title">Новая запись</div>
     <div class="modal-sub">Добавьте информацию об обновлении подборки</div>
-    <div class="form-group">
-      <label class="form-label">Редактор</label>
-      <select id="fEditor"></select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Подборка</label>
-      <select id="fCollection"></select>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Количество добавленных идей</label>
-      <input type="number" id="fCount" min="1" placeholder="Например: 10">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Дата</label>
-      <input type="date" id="fDate">
-    </div>
+    <div class="form-group"><label class="form-label">Редактор</label><select id="fEditor"></select></div>
+    <div class="form-group"><label class="form-label">Подборка</label><select id="fCollection"></select></div>
+    <div class="form-group"><label class="form-label">Количество добавленных идей</label><input type="number" id="fCount" min="1" placeholder="Например: 10"></div>
+    <div class="form-group"><label class="form-label">Дата</label><input type="date" id="fDate"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Отмена</button>
       <button class="btn-confirm" onclick="addEntry()">＋ Добавить запись</button>
@@ -405,332 +312,264 @@ tbody tr:hover .btn-del { opacity: 1; }
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────────────
-// ✏️ НАСТРОЙТЕ ПОД СЕБЯ: добавьте/удалите редакторов и подборки
+// ✏️ НАСТРОЙТЕ ПОД СЕБЯ
 const EDITORS = ["Анна", "Мария", "Дарья", "Ольга", "Екатерина"];
 const COLLECTIONS = ["День рождения", "Новый год", "23 февраля", "8 марта", "Свадьба", "Детям", "Ему", "Ей", "Коллеге"];
 
 const COLORS = {
-  "Анна":      { bg: "#3a1a1a", text: "#e87c8a", bar: "#e87c8a" },
-  "Мария":     { bg: "#1a2a3a", text: "#7cb8e8", bar: "#7cb8e8" },
-  "Дарья":     { bg: "#1a3a2a", text: "#7ce8a8", bar: "#7ce8a8" },
-  "Ольга":     { bg: "#3a2a1a", text: "#e8a87c", bar: "#e8a87c" },
-  "Екатерина": { bg: "#2a1a3a", text: "#c47ed4", bar: "#c47ed4" },
+  "Анна":      { bg: "#FFE8E8", accent: "#E05252" },
+  "Мария":     { bg: "#E8F4FF", accent: "#3A7BD5" },
+  "Дарья":     { bg: "#E8FFE8", accent: "#3AAE3A" },
+  "Ольга":     { bg: "#FFF3E8", accent: "#E07820" },
+  "Екатерина": { bg: "#F3E8FF", accent: "#9B5BD5" },
 };
-function getColor(name) {
-  return COLORS[name] || { bg: "#2a2a3a", text: "#a0a0c0", bar: "#a0a0c0" };
-}
+function ec(n) { return COLORS[n] || { bg: "#f0f0f0", accent: "#888" }; }
 
-// ─── DATA ─────────────────────────────────────────────────────────────────────
-const STORAGE_KEY = "gift_tracker_v2";
-
-function loadData() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
-  // Демо-данные при первом запуске
+const KEY = "gift_tracker_v3";
+function load() {
+  try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch(e) {}
   return [
-    { id: 1, editor: "Анна",      collection: "День рождения", count: 12, date: "2026-02-10" },
-    { id: 2, editor: "Мария",     collection: "Новый год",      count: 8,  date: "2026-02-11" },
-    { id: 3, editor: "Дарья",     collection: "8 марта",        count: 15, date: "2026-02-12" },
-    { id: 4, editor: "Анна",      collection: "Свадьба",        count: 6,  date: "2026-02-13" },
-    { id: 5, editor: "Ольга",     collection: "Детям",          count: 20, date: "2026-02-14" },
-    { id: 6, editor: "Мария",     collection: "23 февраля",     count: 9,  date: "2026-02-14" },
-    { id: 7, editor: "Екатерина", collection: "Ему",            count: 11, date: "2026-02-15" },
-    { id: 8, editor: "Дарья",     collection: "День рождения",  count: 7,  date: "2026-02-15" },
-    { id: 9, editor: "Ольга",     collection: "Коллеге",        count: 14, date: "2026-02-16" },
-    { id: 10, editor: "Анна",     collection: "Ей",             count: 18, date: "2026-02-17" },
-    { id: 11, editor: "Екатерина",collection: "Новый год",      count: 5,  date: "2026-02-17" },
-    { id: 12, editor: "Мария",    collection: "8 марта",        count: 22, date: "2026-02-17" },
+    {id:1, editor:"Анна",       collection:"День рождения", count:12, date:"2026-02-10"},
+    {id:2, editor:"Мария",      collection:"Новый год",     count:8,  date:"2026-02-11"},
+    {id:3, editor:"Дарья",      collection:"8 марта",       count:15, date:"2026-02-12"},
+    {id:4, editor:"Анна",       collection:"Свадьба",       count:6,  date:"2026-02-13"},
+    {id:5, editor:"Ольга",      collection:"Детям",         count:20, date:"2026-02-14"},
+    {id:6, editor:"Мария",      collection:"23 февраля",    count:9,  date:"2026-02-14"},
+    {id:7, editor:"Екатерина",  collection:"Ему",           count:11, date:"2026-02-15"},
+    {id:8, editor:"Дарья",      collection:"День рождения", count:7,  date:"2026-02-15"},
+    {id:9, editor:"Ольга",      collection:"Коллеге",       count:14, date:"2026-02-16"},
+    {id:10,editor:"Анна",       collection:"Ей",            count:18, date:"2026-02-17"},
+    {id:11,editor:"Екатерина",  collection:"Новый год",     count:5,  date:"2026-02-17"},
+    {id:12,editor:"Мария",      collection:"8 марта",       count:22, date:"2026-02-17"},
   ];
 }
+function save() { localStorage.setItem(KEY, JSON.stringify(entries)); }
 
-function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+let entries = load();
+let fEditor="Все", fColl="Все", fDate="", sortBy="date_desc", activeTab="log";
 
-let entries = loadData();
-let filterEditor = "Все", filterCollection = "Все", filterDate = "", sortBy = "date_desc";
-let activeTab = "log";
-
-// ─── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtDate(d) {
-  const [y, m, day] = d.split("-");
-  const months = ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"];
-  return `${parseInt(day)} ${months[parseInt(m)-1]} ${y}`;
+  const [y,m,day] = d.split("-");
+  return `${parseInt(day)} ${["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек"][parseInt(m)-1]} ${y}`;
 }
 
 function getFiltered() {
-  let data = [...entries];
-  if (filterEditor !== "Все") data = data.filter(e => e.editor === filterEditor);
-  if (filterCollection !== "Все") data = data.filter(e => e.collection === filterCollection);
-  if (filterDate) data = data.filter(e => e.date === filterDate);
-  if (sortBy === "date_desc")  data.sort((a,b) => b.date.localeCompare(a.date));
-  if (sortBy === "date_asc")   data.sort((a,b) => a.date.localeCompare(b.date));
-  if (sortBy === "count_desc") data.sort((a,b) => b.count - a.count);
-  if (sortBy === "count_asc")  data.sort((a,b) => a.count - b.count);
-  return data;
+  let d = [...entries];
+  if (fEditor!=="Все") d=d.filter(e=>e.editor===fEditor);
+  if (fColl!=="Все")   d=d.filter(e=>e.collection===fColl);
+  if (fDate)           d=d.filter(e=>e.date===fDate);
+  if (sortBy==="date_desc")  d.sort((a,b)=>b.date.localeCompare(a.date));
+  if (sortBy==="date_asc")   d.sort((a,b)=>a.date.localeCompare(b.date));
+  if (sortBy==="count_desc") d.sort((a,b)=>b.count-a.count);
+  if (sortBy==="count_asc")  d.sort((a,b)=>a.count-b.count);
+  return d;
 }
 
 function getStats() {
-  const total = entries.reduce((s,e) => s + e.count, 0);
+  const total = entries.reduce((s,e)=>s+e.count,0);
   const today = new Date().toISOString().split("T")[0];
-  const todayCount = entries.filter(e => e.date === today).reduce((s,e) => s + e.count, 0);
-  const byEditor = EDITORS.map(ed => ({
-    name: ed,
-    total: entries.filter(e => e.editor === ed).reduce((s,e) => s + e.count, 0),
-    updates: entries.filter(e => e.editor === ed).length,
-  })).sort((a,b) => b.total - a.total);
-  const byCollection = COLLECTIONS.map(col => ({
-    name: col,
-    total: entries.filter(e => e.collection === col).reduce((s,e) => s + e.count, 0),
-    updates: entries.filter(e => e.collection === col).length,
-  })).filter(c => c.total > 0).sort((a,b) => b.total - a.total);
-  return { total, todayCount, byEditor, byCollection };
+  const todayCount = entries.filter(e=>e.date===today).reduce((s,e)=>s+e.count,0);
+  const byEditor = EDITORS.map(ed=>({
+    name:ed,
+    total:entries.filter(e=>e.editor===ed).reduce((s,e)=>s+e.count,0),
+    updates:entries.filter(e=>e.editor===ed).length
+  })).sort((a,b)=>b.total-a.total);
+  const byCollection = COLLECTIONS.map(col=>({
+    name:col,
+    total:entries.filter(e=>e.collection===col).reduce((s,e)=>s+e.count,0),
+    updates:entries.filter(e=>e.collection===col).length
+  })).filter(c=>c.total>0).sort((a,b)=>b.total-a.total);
+  return {total,todayCount,byEditor,byCollection};
 }
 
-// ─── RENDER STATS ─────────────────────────────────────────────────────────────
 function renderStats() {
   const s = getStats();
   const cards = [
-    { label: "Всего идей добавлено", value: s.total, sub: "за всё время", c: "#c47ed4" },
-    { label: "Добавлено сегодня",    value: s.todayCount, sub: "17 февраля 2026", c: "#e8a87c" },
-    { label: "Всего записей",        value: entries.length, sub: "обновлений подборок", c: "#7cb8e8" },
-    { label: "Лидер по идеям",       value: s.byEditor[0]?.name || "—", sub: (s.byEditor[0]?.total || 0) + " идей", c: "#e87c8a" },
+    {label:"Всего идей добавлено", value:s.total,        sub:"за всё время",       color:"#957DAD", delay:"0s"},
+    {label:"Добавлено сегодня",    value:s.todayCount,   sub:"за сегодня",          color:"#E07820", delay:"0.07s"},
+    {label:"Всего записей",        value:entries.length, sub:"обновлений подборок", color:"#3A7BD5", delay:"0.14s"},
+    {label:"Лидер по идеям",       value:s.byEditor[0]?.name||"—", sub:(s.byEditor[0]?.total||0)+" идей", color:"#E05252", delay:"0.21s"},
   ];
-  document.getElementById("statsGrid").innerHTML = cards.map((c, i) => `
-    <div class="stat-card" style="--c:${c.c}; animation-delay:${i*0.07}s">
+  document.getElementById("statsGrid").innerHTML = cards.map(c=>`
+    <div class="stat-card" style="border:2px solid ${c.color}22;box-shadow:0 2px 16px ${c.color}15;animation-delay:${c.delay}">
       <div class="stat-label">${c.label}</div>
-      <div class="stat-value">${c.value}</div>
+      <div class="stat-value" style="color:${c.color}">${c.value}</div>
       <div class="stat-sub">${c.sub}</div>
-    </div>
-  `).join("");
+    </div>`).join("");
 }
 
-// ─── RENDER LOG ───────────────────────────────────────────────────────────────
 function renderLog() {
-  const filtered = getFiltered();
-  const hasFilters = filterEditor !== "Все" || filterCollection !== "Все" || filterDate;
-
+  const f = getFiltered();
+  const hasF = fEditor!=="Все"||fColl!=="Все"||fDate;
   document.getElementById("panel-log").innerHTML = `
     <div class="filters">
       <span class="filter-label">Фильтры:</span>
-      <select onchange="filterEditor=this.value; renderAll()">
-        <option>Все</option>
-        ${EDITORS.map(e => `<option ${filterEditor===e?"selected":""}>${e}</option>`).join("")}
+      <select onchange="fEditor=this.value;renderAll()">
+        <option>Все</option>${EDITORS.map(e=>`<option${fEditor===e?" selected":""}>${e}</option>`).join("")}
       </select>
-      <select onchange="filterCollection=this.value; renderAll()">
-        <option>Все</option>
-        ${COLLECTIONS.map(c => `<option ${filterCollection===c?"selected":""}>${c}</option>`).join("")}
+      <select onchange="fColl=this.value;renderAll()">
+        <option>Все</option>${COLLECTIONS.map(c=>`<option${fColl===c?" selected":""}>${c}</option>`).join("")}
       </select>
-      <input type="date" value="${filterDate}" onchange="filterDate=this.value; renderAll()">
-      ${hasFilters ? `<button class="btn-reset" onclick="filterEditor='Все';filterCollection='Все';filterDate='';renderAll()">✕ Сбросить</button>` : ""}
+      <input type="date" value="${fDate}" onchange="fDate=this.value;renderAll()">
+      ${hasF?`<button class="btn-reset" onclick="fEditor='Все';fColl='Все';fDate='';renderAll()">✕ Сбросить</button>`:""}
       <div class="sort-wrap">
         <span class="filter-label">Сортировка:</span>
-        <select onchange="sortBy=this.value; renderAll()">
-          <option value="date_desc"  ${sortBy==="date_desc" ?"selected":""}>Сначала новые</option>
-          <option value="date_asc"   ${sortBy==="date_asc"  ?"selected":""}>Сначала старые</option>
-          <option value="count_desc" ${sortBy==="count_desc"?"selected":""}>Больше идей</option>
-          <option value="count_asc"  ${sortBy==="count_asc" ?"selected":""}>Меньше идей</option>
+        <select onchange="sortBy=this.value;renderAll()">
+          <option value="date_desc"${sortBy==="date_desc"?" selected":""}>Сначала новые</option>
+          <option value="date_asc"${sortBy==="date_asc"?" selected":""}>Сначала старые</option>
+          <option value="count_desc"${sortBy==="count_desc"?" selected":""}>Больше идей</option>
+          <option value="count_asc"${sortBy==="count_asc"?" selected":""}>Меньше идей</option>
         </select>
       </div>
     </div>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Редактор</th><th>Подборка</th><th>Идей добавлено</th><th>Дата</th><th></th>
-          </tr>
-        </thead>
-        <tbody>
-          ${filtered.length === 0
-            ? `<tr><td colspan="5" class="table-empty">Нет записей по выбранным фильтрам</td></tr>`
-            : filtered.map(e => {
-                const c = getColor(e.editor);
-                return `
-                  <tr>
-                    <td>
-                      <div class="editor-cell">
-                        <div class="editor-avatar" style="background:${c.bg};color:${c.text}">${e.editor[0]}</div>
-                        <span class="editor-name">${e.editor}</span>
-                      </div>
-                    </td>
-                    <td><span class="coll-tag">🎁 ${e.collection}</span></td>
-                    <td><span class="count-val" style="color:${c.text}">${e.count}</span> <span style="font-size:12px;color:var(--muted)">идей</span></td>
-                    <td><span class="date-val">${fmtDate(e.date)}</span></td>
-                    <td><button class="btn-del" onclick="deleteEntry(${e.id})">Удалить</button></td>
-                  </tr>`;
-              }).join("")
-          }
-        </tbody>
+        <thead><tr><th>Редактор</th><th>Подборка</th><th>Идей добавлено</th><th>Дата</th><th></th></tr></thead>
+        <tbody>${f.length===0
+          ?`<tr><td colspan="5" class="table-empty">Нет записей по выбранным фильтрам</td></tr>`
+          :f.map(e=>{const c=ec(e.editor);return`<tr>
+            <td><div class="editor-cell">
+              <div class="editor-avatar" style="background:${c.bg};color:${c.accent}">${e.editor[0]}</div>
+              <span class="editor-name">${e.editor}</span>
+            </div></td>
+            <td><span class="coll-tag">🎁 ${e.collection}</span></td>
+            <td><div class="count-cell">
+              <span class="count-num" style="color:${c.accent}">${e.count}</span>
+              <span class="count-unit">идей</span>
+            </div></td>
+            <td><span class="date-val">${fmtDate(e.date)}</span></td>
+            <td><button class="btn-del" onclick="delEntry(${e.id})">Удалить</button></td>
+          </tr>`;}).join("")
+        }</tbody>
       </table>
-      <div class="table-footer">Показано: ${filtered.length} из ${entries.length} записей</div>
-    </div>
-  `;
+      <div class="table-footer">Показано: ${f.length} из ${entries.length} записей</div>
+    </div>`;
 }
 
-// ─── RENDER EDITORS ───────────────────────────────────────────────────────────
 function renderEditors() {
   const s = getStats();
-  const totalAll = s.total;
-  document.getElementById("panel-editors").innerHTML = `
-    <div class="editors-grid">
-      ${s.byEditor.map((ed, i) => {
-        const c = getColor(ed.name);
-        const edEntries = entries.filter(e => e.editor === ed.name).sort((a,b) => b.date.localeCompare(a.date)).slice(0,4);
-        const pct = totalAll > 0 ? Math.round(ed.total / totalAll * 100) : 0;
-        return `
-          <div class="editor-card" style="animation-delay:${i*0.08}s">
-            <div class="editor-card-head">
-              <div class="editor-card-big-avatar" style="background:${c.bg};color:${c.text}">${ed.name[0]}</div>
+  document.getElementById("panel-editors").innerHTML = `<div class="editors-grid">${
+    s.byEditor.map((ed,i)=>{
+      const c=ec(ed.name);
+      const edE=entries.filter(e=>e.editor===ed.name).sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);
+      const pct=s.total>0?Math.round(ed.total/s.total*100):0;
+      return `<div class="editor-card" style="animation-delay:${i*0.08}s">
+        <div class="editor-card-head">
+          <div class="editor-big-avatar" style="background:${c.bg};color:${c.accent}">${ed.name[0]}</div>
+          <div>
+            <div class="editor-card-name">${ed.name}</div>
+            <div class="editor-card-meta">${ed.updates} обновлений</div>
+          </div>
+          <div class="editor-card-total">
+            <div class="editor-card-total-num" style="color:${c.accent}">${ed.total}</div>
+            <div class="editor-card-total-label">идей</div>
+          </div>
+        </div>
+        <div>
+          <div class="editor-card-cols-head"><span>Подборка</span><span>Идей</span></div>
+          ${edE.length===0?`<div class="editor-empty">Нет записей</div>`:edE.map(e=>`
+            <div class="editor-entry">
               <div>
-                <div class="editor-card-name">${ed.name}</div>
-                <div class="editor-card-meta">${ed.updates} обновлений</div>
+                <div class="editor-entry-coll">${e.collection}</div>
+                <div class="editor-entry-date">${fmtDate(e.date)}</div>
               </div>
-              <div class="editor-card-total">
-                <div class="editor-card-total-num" style="color:${c.text}">${ed.total}</div>
-                <div class="editor-card-total-label">идей</div>
-              </div>
-            </div>
-            <div class="editor-card-body">
-              ${edEntries.length === 0
-                ? `<div class="editor-empty">Нет записей</div>`
-                : edEntries.map(e => `
-                    <div class="editor-entry">
-                      <div>
-                        <div class="editor-entry-coll">${e.collection}</div>
-                        <div class="editor-entry-date">${fmtDate(e.date)}</div>
-                      </div>
-                      <div class="editor-entry-count" style="color:${c.text}">+${e.count}</div>
-                    </div>`).join("")
-              }
-              ${ed.updates > 4 ? `<div style="padding:8px 24px;font-size:12px;color:var(--muted);border-top:1px solid #1e1a2a">+ ещё ${ed.updates-4} записей</div>` : ""}
-            </div>
-            <div class="editor-card-bar">
-              <div class="bar-info">
-                <span>Доля от общего</span>
-                <span style="color:${c.text};font-weight:700">${pct}%</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill" style="width:${pct}%;background:${c.bar}"></div>
-              </div>
-            </div>
-          </div>`;
-      }).join("")}
-    </div>
-  `;
+              <span class="editor-entry-count" style="color:${c.accent}">+${e.count}</span>
+            </div>`).join("")}
+          ${ed.updates>4?`<div class="editor-more">+ ещё ${ed.updates-4} записей</div>`:""}
+        </div>
+        <div class="editor-card-bar">
+          <div class="bar-info">
+            <span style="color:#b0a0c0">Доля от общего</span>
+            <span style="color:${c.accent};font-weight:700">${pct}%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${c.accent}"></div></div>
+        </div>
+      </div>`;
+    }).join("")
+  }</div>`;
 }
 
-// ─── RENDER COLLECTIONS ───────────────────────────────────────────────────────
 function renderCollections() {
   const s = getStats();
-  const maxC = Math.max(...s.byCollection.map(c => c.total), 1);
-  document.getElementById("panel-collections").innerHTML = `
-    <div class="coll-list">
-      ${s.byCollection.length === 0
-        ? `<div class="table-empty">Нет данных</div>`
-        : s.byCollection.map(col => {
-            const pct = Math.round(col.total / maxC * 100);
-            const colEntries = entries.filter(e => e.collection === col.name);
-            const editors = [...new Set(colEntries.map(e => e.editor))];
-            return `
-              <div class="coll-item">
-                <div class="coll-item-top">
-                  <div class="coll-item-icon">🎁</div>
-                  <div>
-                    <div class="coll-item-name">${col.name}</div>
-                    <div class="coll-item-meta">${col.updates} обновлений</div>
-                  </div>
-                  <div class="coll-item-count">
-                    <div class="coll-item-count-num">${col.total}</div>
-                    <div class="coll-item-count-label">идей</div>
-                  </div>
-                </div>
-                <div class="coll-bar-track">
-                  <div class="coll-bar-fill" style="width:${pct}%"></div>
-                </div>
-                <div class="coll-editors-chips">
-                  ${editors.map(ed => {
-                    const c = getColor(ed);
-                    const cnt = colEntries.filter(e => e.editor === ed).reduce((s,e) => s+e.count, 0);
-                    return `<span class="chip" style="background:${c.bg};color:${c.text}">${ed}: ${cnt}</span>`;
-                  }).join("")}
-                </div>
-              </div>`;
-          }).join("")
-      }
-    </div>
-  `;
+  const maxC = Math.max(...s.byCollection.map(c=>c.total),1);
+  document.getElementById("panel-collections").innerHTML = `<div class="coll-list">${
+    s.byCollection.length===0?`<div class="table-empty">Нет данных</div>`:
+    s.byCollection.map(col=>{
+      const pct=Math.round(col.total/maxC*100);
+      const colE=entries.filter(e=>e.collection===col.name);
+      const editors=[...new Set(colE.map(e=>e.editor))];
+      return `<div class="coll-item">
+        <div class="coll-item-top">
+          <div class="coll-icon">🎁</div>
+          <div>
+            <div class="coll-name">${col.name}</div>
+            <div class="coll-meta">${col.updates} обновлений</div>
+          </div>
+          <div class="coll-count">
+            <div class="coll-count-num">${col.total}</div>
+            <div class="coll-count-label">идей</div>
+          </div>
+        </div>
+        <div class="coll-bar-track"><div class="coll-bar-fill" style="width:${pct}%"></div></div>
+        <div class="chips">${editors.map(ed=>{
+          const c=ec(ed);
+          const cnt=colE.filter(e=>e.editor===ed).reduce((s,e)=>s+e.count,0);
+          return `<span class="chip" style="background:${c.bg};color:${c.accent}">${ed}: ${cnt}</span>`;
+        }).join("")}</div>
+      </div>`;
+    }).join("")
+  }</div>`;
 }
 
-// ─── RENDER ALL ───────────────────────────────────────────────────────────────
 function renderAll() {
   renderStats();
-  if (activeTab === "log")         renderLog();
-  else if (activeTab === "editors")    renderEditors();
-  else if (activeTab === "collections") renderCollections();
+  if(activeTab==="log") renderLog();
+  else if(activeTab==="editors") renderEditors();
+  else if(activeTab==="collections") renderCollections();
 }
 
-// ─── TABS ─────────────────────────────────────────────────────────────────────
-function switchTab(name, btn) {
-  activeTab = name;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+function switchTab(name,btn) {
+  activeTab=name;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   btn.classList.add("active");
-  ["log","editors","collections"].forEach(t => {
-    document.getElementById("panel-"+t).style.display = t === name ? "" : "none";
+  ["log","editors","collections"].forEach(t=>{
+    document.getElementById("panel-"+t).style.display=t===name?"":"none";
   });
   renderAll();
 }
 
-// ─── MODAL ────────────────────────────────────────────────────────────────────
 function openModal() {
-  const sel = document.getElementById("fEditor");
-  const selC = document.getElementById("fCollection");
-  sel.innerHTML = EDITORS.map(e => `<option>${e}</option>`).join("");
-  selC.innerHTML = COLLECTIONS.map(c => `<option>${c}</option>`).join("");
-  document.getElementById("fCount").value = "";
-  document.getElementById("fDate").value = new Date().toISOString().split("T")[0];
+  document.getElementById("fEditor").innerHTML=EDITORS.map(e=>`<option>${e}</option>`).join("");
+  document.getElementById("fCollection").innerHTML=COLLECTIONS.map(c=>`<option>${c}</option>`).join("");
+  document.getElementById("fCount").value="";
+  document.getElementById("fDate").value=new Date().toISOString().split("T")[0];
   document.getElementById("modalOverlay").classList.add("open");
 }
-function closeModal() {
-  document.getElementById("modalOverlay").classList.remove("open");
-}
-function closeModalOutside(e) {
-  if (e.target === document.getElementById("modalOverlay")) closeModal();
-}
+function closeModal() { document.getElementById("modalOverlay").classList.remove("open"); }
+function closeModalOutside(e) { if(e.target===document.getElementById("modalOverlay")) closeModal(); }
 
 function addEntry() {
-  const editor = document.getElementById("fEditor").value;
-  const collection = document.getElementById("fCollection").value;
-  const countRaw = document.getElementById("fCount").value;
-  const date = document.getElementById("fDate").value;
-  const count = parseInt(countRaw);
-  if (!count || count <= 0) { showToast("⚠️ Введите количество идей"); return; }
-  if (!date) { showToast("⚠️ Выберите дату"); return; }
-  entries.unshift({ id: Date.now(), editor, collection, count, date });
-  saveData(entries);
-  closeModal();
-  renderAll();
-  showToast("✅ Запись добавлена!");
+  const editor=document.getElementById("fEditor").value;
+  const collection=document.getElementById("fCollection").value;
+  const count=parseInt(document.getElementById("fCount").value);
+  const date=document.getElementById("fDate").value;
+  if(!count||count<=0){showToast("⚠️ Введите количество идей");return;}
+  if(!date){showToast("⚠️ Выберите дату");return;}
+  entries.unshift({id:Date.now(),editor,collection,count,date});
+  save(); closeModal(); renderAll(); showToast("✅ Запись добавлена!");
 }
 
-function deleteEntry(id) {
-  entries = entries.filter(e => e.id !== id);
-  saveData(entries);
-  renderAll();
-  showToast("🗑 Запись удалена");
+function delEntry(id) {
+  entries=entries.filter(e=>e.id!==id);
+  save(); renderAll(); showToast("🗑 Запись удалена");
 }
 
-// ─── TOAST ────────────────────────────────────────────────────────────────────
 function showToast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2500);
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2500);
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
 renderAll();
 </script>
 </body>
